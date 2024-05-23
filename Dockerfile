@@ -5,7 +5,7 @@ FROM openjdk:17-alpine
 WORKDIR /app
 
 # Copia el archivo JAR de tu aplicación al contenedor
-COPY target/Servicios-0.0.1-SNAPSHOT.jar app.jar
+COPY target/solicitudes-0.0.1-SNAPSHOT.jar app.jar
 
 # Comando para ejecutar tu aplicación cuando el contenedor se inicie
 CMD ["java", "-jar", "app.jar"]

@@ -1,5 +1,6 @@
 package com.homehero.solicitudes.controllers;
 
+import com.homehero.solicitudes.DTOSolicitudes.VisitDto;
 import com.homehero.solicitudes.models.ErrorResponse;
 import com.homehero.solicitudes.models.Visit;
 import com.homehero.solicitudes.services.VisitService;
@@ -32,7 +33,7 @@ public class Controller {
     @GetMapping(value = "/GetHeroVisits")
     public ResponseEntity<?> GetHeroVisits(@RequestParam int hero_id) {
         try {
-            List<Visit> visits = serviceService.getHeroVisits(hero_id);
+            List<VisitDto> visits = serviceService.getHeroVisits(hero_id);
             return new ResponseEntity<>(visits, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -42,6 +43,7 @@ public class Controller {
     @PostMapping(value = "/CreateVisit")
     public ResponseEntity<?> CreateHeroService(@RequestBody Visit visit){
         try {
+            visit.setVisit_status(1);
             visitService.createVisit(visit);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {

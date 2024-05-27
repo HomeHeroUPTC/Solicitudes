@@ -9,7 +9,6 @@ import lombok.*;
 @ToString
 @Entity
 public class Visit {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(nullable = false)
@@ -32,4 +31,7 @@ public class Visit {
 
     @Column(nullable = false, length = 50)
     private String address;
+
+    @Column(nullable = true)
+    private int visit_status;
 }

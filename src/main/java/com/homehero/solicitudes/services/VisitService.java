@@ -7,7 +7,9 @@ import com.homehero.solicitudes.models.Quote;
 import com.homehero.solicitudes.models.Visit;
 import com.homehero.solicitudes.repositories.VisitRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.client.RestTemplate;
 
@@ -75,5 +77,14 @@ public class VisitService {
         UserAgendaDTO agenda = new UserAgendaDTO(visit);
         String url = "https://msagenda-zaewler4iq-uc.a.run.app/Agenda/Schedule_visit";
         restTemplate.postForEntity(url, agenda, Void.class);
+    }
+
+    @Transactional
+    public void updateVisitStatus(int visitId, int status) {
+        String q = "UPDATE Visit v SET v.visit_status = :status WHERE v.visit_id = :visitId";
+        Query query = entityManager.createQuery(q);
+        query.setParameter("status", status);
+        query.setParameter("visitId", visitId);
+        query.executeUpdate();
     }
 }

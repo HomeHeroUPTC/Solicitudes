@@ -69,4 +69,43 @@ public class Controller {
         }
     }
 
+    @GetMapping(value = "/GetHeroQuotes")
+    public ResponseEntity<?> GetHeroQuotes(@RequestParam int hero_id) {
+        try {
+            List<Quote> quotes = quoteService.getHeroQuote(hero_id);
+            return new ResponseEntity<>(quotes, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/GetClientQuotes")
+    public ResponseEntity<?> GetClientQuotes(@RequestParam int client_id) {
+        try {
+            List<Quote> quotes = quoteService.getClientQuote(client_id);
+            return new ResponseEntity<>(quotes, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(value = "/UpdateVisitStatus")
+    public ResponseEntity<?> UpdateVisitStatus(@RequestParam int visit_id, @RequestParam int status){
+        try {
+            visitService.updateVisitStatus(visit_id, status);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(value = "/UpdateQuoteStatus")
+    public ResponseEntity<?> UpdateQuoteStatus(@RequestParam int quote_id, @RequestParam int status){
+        try {
+            quoteService.updateQuoteStatus(quote_id, status);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

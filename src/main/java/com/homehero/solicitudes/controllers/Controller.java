@@ -50,6 +50,7 @@ public class Controller {
         try {
             visit.setVisit_status(1);
             visitService.createVisit(visit);
+            visitService.scheduleVisit(visit);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
@@ -61,6 +62,7 @@ public class Controller {
         try {
             quote.setQuote_status(1);
             quoteService.createQuote(quote);
+            quoteService.scheduleQuote(quote);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

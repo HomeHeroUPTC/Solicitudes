@@ -1,7 +1,9 @@
 package com.homehero.solicitudes.services;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.homehero.solicitudes.DTOSolicitudes.UserAgendaDTO;
 import com.homehero.solicitudes.DTOSolicitudes.VisitDto;
+import com.homehero.solicitudes.models.Quote;
 import com.homehero.solicitudes.models.Visit;
 import com.homehero.solicitudes.repositories.VisitRepository;
 import jakarta.persistence.EntityManager;
@@ -67,5 +69,11 @@ public class VisitService {
     public String getServiceName(int id) {
         String url = "https://msservice-zaewler4iq-uc.a.run.app/Services/NameByHeroServiceId?hero_service_id=" + id;
         return restTemplate.getForObject(url, String.class);
+    }
+
+    public void scheduleVisit(Visit visit) {
+        UserAgendaDTO agenda = new UserAgendaDTO(visit);
+        String url = "https://msagenda-zaewler4iq-uc.a.run.app/Agenda/Schedule_visit";
+        restTemplate.postForEntity(url, agenda, Void.class);
     }
 }

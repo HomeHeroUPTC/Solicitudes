@@ -2,8 +2,10 @@ package com.homehero.solicitudes.controllers;
 
 import com.homehero.solicitudes.DTOSolicitudes.VisitDto;
 import com.homehero.solicitudes.models.ErrorResponse;
+import com.homehero.solicitudes.models.Quote;
 import com.homehero.solicitudes.models.Visit;
 import com.homehero.solicitudes.services.VisitService;
+import com.homehero.solicitudes.services.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +21,9 @@ public class Controller {
     private VisitService serviceService;
     @Autowired
     private VisitService visitService;
+    @Autowired
+    private QuoteService quoteService;
+
 
     @GetMapping(value = "/GetClientVisits")
     public ResponseEntity<?> getServices(@RequestParam int client_id) {
@@ -45,6 +50,17 @@ public class Controller {
         try {
             visit.setVisit_status(1);
             visitService.createVisit(visit);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping(value = "/CreateQuote")
+    public ResponseEntity<?> CreateHeroService(@RequestBody Quote quote){
+        try {
+            quote.setQuote_status(1);
+            quoteService.createQuote(quote);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (Exception e) {
             return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);

@@ -6,6 +6,7 @@ import com.homehero.solicitudes.models.Quote;
 import com.homehero.solicitudes.models.Visit;
 import com.homehero.solicitudes.repositories.QuoteRepository;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import jakarta.transaction.Transactional;
@@ -56,5 +57,15 @@ public class QuoteService {
         query.setParameter("status", status);
         query.setParameter("quoteId", quoteId);
         query.executeUpdate();
+    }
+
+    public int getVisitId(int eventId) {
+        String q = String.format("SELECT q.visit_id from Quote q  where q.id = %s", eventId);
+        TypedQuery<Integer> query = entityManager.createQuery(q, Integer.class);
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            return 0;
+        }
     }
 }

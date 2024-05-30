@@ -108,4 +108,24 @@ public class Controller {
             return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @GetMapping(value = "/GetVisitTitle")
+    public ResponseEntity<?> GetVisitTitle(@RequestParam int event_id) {
+        try {
+            String title = visitService.getServiceNameByvisitId(event_id);
+            return new ResponseEntity<>(title, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @GetMapping(value = "/GetQuoteTitle")
+    public ResponseEntity<?> GetQuoteTitle(@RequestParam int event_id) {
+        try {
+            String title = visitService.getServiceNameByvisitId(quoteService.getVisitId(event_id));
+            return new ResponseEntity<>(title, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new ErrorResponse("An error occurred while fetching services: " + e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

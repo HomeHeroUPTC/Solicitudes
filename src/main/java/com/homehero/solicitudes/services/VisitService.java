@@ -87,4 +87,11 @@ public class VisitService {
         query.setParameter("visitId", visitId);
         query.executeUpdate();
     }
+
+    public String getServiceNameByvisitId(int visit_id) {
+        Visit v = visitRepository.findById(visit_id).orElse(null);
+        String url = "https://msservice-zaewler4iq-uc.a.run.app/Services/NameByHeroServiceId?hero_service_id=" + v.getHero_service_id();
+        return restTemplate.getForObject(url, String.class);
+    }
+
 }
